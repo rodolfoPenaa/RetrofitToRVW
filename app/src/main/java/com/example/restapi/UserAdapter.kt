@@ -24,12 +24,11 @@ class UserAdapter(var mdataSet: List<User>): RecyclerView.Adapter<UserAdapter.us
     }
 
     override fun onBindViewHolder(holder: userHolder, position: Int) {
-        var user = mdataSet[position]
+        val user = mdataSet[position]
         holder.nameTv.text = user.name
         holder.emailTv.text = user.email
         holder.phoneTv.text = user.phone
     }
-
     override fun getItemCount(): Int {
        return mdataSet.size
     }
