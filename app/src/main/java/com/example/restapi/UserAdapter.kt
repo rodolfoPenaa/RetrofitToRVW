@@ -3,11 +3,8 @@ package com.example.restapi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.restapi.pojo.User
+import com.example.restapi.pojo.users.User
 import kotlinx.android.synthetic.main.users_list_item.view.*
 
 class UserAdapter(var mdataSet: List<User>): RecyclerView.Adapter<UserAdapter.userHolder>() {

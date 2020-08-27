@@ -1,4 +1,4 @@
-package com.example.restapi.pojo
+package com.example.restapi.pojo.posts
 
 import com.google.gson.annotations.SerializedName
 
