@@ -15,5 +15,4 @@ interface Api {
     @DELETE("/posts/{postId}")
     fun deletePost(@Path("postId") postId: Int?): Call<Void>
 
-
 }

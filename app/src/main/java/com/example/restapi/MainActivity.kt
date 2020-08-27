@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restapi.pojo.Post
 import com.example.restapi.pojo.User
+import com.example.restapi.remote.Api
 import com.example.restapi.remote.RetrofitClient
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -15,7 +16,7 @@ import retrofit2.Callback
 
 class MainActivity : AppCompatActivity() {
     private var postsList = ArrayList<Post>()
-    private var userList = ArrayList<User>()
+    private var userList: ArrayList<User> = ArrayList()
     // private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var userAdapter: UserAdapter
 
@@ -23,24 +24,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-       loadApiData()
-
+        loadApiData()
+        userAdapter = UserAdapter(userList)
+        postsRecyclerView.adapter = userAdapter
     }
-//                                                                   for charge data response of API
+//                                         for charge data of response API
     private fun loadApiData() {
         val service = RetrofitClient.retrofitInstance()
         val call = service.getAllUsers()
-        userAdapter = UserAdapter(userList)
-        postsRecyclerView.adapter = userAdapter
-        call.enqueue(object : Callback<List<User>>{
+
+        call.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                userList= response.body() as ArrayList<User>
+                //userList = response.body() as ArrayList<User>
+                response.body()?.map { userList.add(it) }
                 userAdapter.notifyDataSetChanged()
             }
+
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 Log.e("FAIL", "chan")
-                Toast.makeText(this@MainActivity, "Error $t", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Error $t", Toast.LENGTH_LONG
+                ).show()
             }
         })
+
     }
 }
